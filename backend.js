@@ -55,3 +55,16 @@ app.post('api/Expenses', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
+db.on('error', (error) => {
+    console.error('MongoDB connection error: ' + error);
+});
+
+db.once('open', () => {
+    console.log('Connected to MongoDB');
+});
+
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`PORT: ${PORT}`);
+});
