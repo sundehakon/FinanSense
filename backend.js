@@ -36,3 +36,22 @@ const expenseSchema = new mongoose.Schema({
 }, { collection: 'Expenses' });
 
 const Expenses = mongoose.model('Expenses', expenseSchema);
+
+app.post('api/Expenses', async (req, res) => {
+    const { userId, category, amount, description, date } = req.body;
+
+    const expenses = new Expenses({
+        userId,
+        category,
+        amount,
+        description,
+        date,
+    });
+
+    try {
+        const savedExpenses = await expenses.save();
+        res.status(200).json(savedExpenses);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
