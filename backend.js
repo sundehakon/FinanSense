@@ -37,7 +37,7 @@ const expenseSchema = new mongoose.Schema({
 
 const Expenses = mongoose.model('Expenses', expenseSchema);
 
-app.post('api/Expenses', async (req, res) => {
+app.post('/api/Expenses', async (req, res) => {
     const { userId, category, amount, description, date } = req.body;
 
     const expenses = new Expenses({
@@ -52,6 +52,16 @@ app.post('api/Expenses', async (req, res) => {
         const savedExpenses = await expenses.save();
         res.status(200).json(savedExpenses);
     } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+app.get('/api/Expenses', async (req, res) => {
+    try {
+        const expenses = await Expenses.find();
+        res.status(200).json(expenses);
+    } catch (err) {
+        console.error('Error fetching expenses:', err); 
         res.status(500).send(err);
     }
 });
