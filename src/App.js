@@ -1,10 +1,10 @@
 import './App.css';
-import MyChartComponent from './Components/Chart';
+import ChartComponent from './Components/Chart';
 
 function App() {
   return (
     <div className="App">
-      <MyChartComponent />
+      <ChartComponent />
     </div>
   );
 }
