@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
+import { Box } from '@mui/material';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -48,6 +49,7 @@ const ChartComponent = () => {
         type: 'doughnut',
         data: chartData,
         options: {
+            responsive: true,
             maintainAspectRatio: false,
         },
     }), [chartData]);
@@ -68,7 +70,9 @@ const ChartComponent = () => {
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {!loading && !error && categories.length > 0 && (
-                <canvas ref={chartRef} height={400} width={400}></canvas>
+                <Box>
+                    <canvas ref={chartRef}></canvas>
+                </Box>
             )}
         </>
     );
