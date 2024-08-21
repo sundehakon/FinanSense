@@ -8,24 +8,27 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 const ChartComponent = () => {
     const chartRef = useRef(null);
     const [categories, setCategories] = useState([]);
+    const [amounts, setAmounts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchCategories = async () => {
+        const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/Expenses');
-                const data = response.data.map(expense => expense.category);
-                setCategories(data);
+                const categoryData = response.data.map(expense => expense.category);
+                const amountData = response.data.map(expense => expense.amount);
+                setCategories(categoryData);
+                setAmounts(amountData);
                 setLoading(false);
             } catch (error) {
-                console.error('Error fetching categories', error);
-                setError('Failed to fetch categories');
+                console.error('Error fetching data', error);
+                setError('Failed to fetch data');
                 setLoading(false);
             }
         };
 
-        fetchCategories();
+        fetchData();
     }, []);
 
     const generateRandomColor = () => {
@@ -40,10 +43,10 @@ const ChartComponent = () => {
     const chartData = useMemo(() => ({
         labels: categories,
         datasets: [{
-            data: categories.map(() => Math.random() * 100),
+            data: amounts, 
             backgroundColor: categories.map(() => generateRandomColor()),
         }],
-    }), [categories]);
+    }), [categories, amounts]);
 
     const chartConfig = useMemo(() => ({
         type: 'doughnut',
