@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
+import { Box, Typography, TextField, Button, FormControl, Select, MenuItem, InputLabel, IconButton } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import axios from "axios";
 
 const Add = () => {
+    const [showForm, setShowForm] = useState(false);
     const [formData, setFormData] = useState({
         userId: 'secret',
         category: '',
@@ -36,7 +39,16 @@ const Add = () => {
 
     return (
         <Box sx={{ width: 500 }}>
-            <Typography variant='h4'>Add Transaction</Typography>
+            <Typography variant='h4'>Add Expense</Typography>
+            {!showForm &&
+                <IconButton
+                    onClick={() => setShowForm(true)}   
+                    sx={{ mt: 2 }}
+                >
+                    <ExpandMoreIcon />
+                </IconButton>
+            }
+            {showForm &&
             <form onSubmit={handleSubmit}>
                 <FormControl fullWidth margin="normal">
                     <InputLabel id="category-label">Category</InputLabel>
@@ -84,7 +96,14 @@ const Add = () => {
                 >
                     Add
                 </Button>
+                <IconButton
+                    onClick={() => setShowForm(false)}
+                    sx={{ mt: 2 }}
+                >
+                    <ExpandLessIcon />
+                </IconButton>
             </form>
+    }
         </Box>
     );
 };
