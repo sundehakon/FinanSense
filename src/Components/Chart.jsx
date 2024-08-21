@@ -84,7 +84,9 @@ const ChartComponent = () => {
         <>
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
-            <Typography variant='h4'>Total: {total}$</Typography>
+            {!loading && !error && categories.length > 0 && (
+                <Typography variant='h4'>Total: {total}$</Typography>
+            )}
             {!loading && !error && categories.length > 0 && (
                 <Box>
                     <canvas ref={chartRef}></canvas>
