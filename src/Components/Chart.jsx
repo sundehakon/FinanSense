@@ -31,22 +31,24 @@ const ChartComponent = () => {
         fetchData();
     }, []);
 
-    const generateRandomColor = () => {
-        const letters = '0123456789ABCDEF';
-        let color = '#';
-        for (let i = 0; i < 6; i++) {
-            color += letters[Math.floor(Math.random() * 16)];
-        }
-        return color;
-    };
+    const chartData = useMemo(() => {
+        const categoryColors = {
+            Food: '#205A28',
+            Transport: '#2b2d42',
+            Entertainment: '#C5ADC5',
+            Utilities: '#E5EDF1',
+            Healthcare: '#E7473C',
+            Other: '#ECA427',
+        };
 
-    const chartData = useMemo(() => ({
-        labels: categories,
-        datasets: [{
-            data: amounts, 
-            backgroundColor: categories.map(() => generateRandomColor()),
-        }],
-    }), [categories, amounts]);
+        return {
+            labels: categories,
+            datasets: [{
+                data: amounts, 
+                backgroundColor: categories.map(category => categoryColors[category])
+            }],
+        };
+    }, [categories, amounts]);
 
     const chartConfig = useMemo(() => ({
         type: 'doughnut',

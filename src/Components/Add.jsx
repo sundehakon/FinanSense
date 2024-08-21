@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, FormControl, Select, MenuItem, InputLabel } from "@mui/material";
 import axios from "axios";
 
 const Add = () => {
@@ -24,7 +24,7 @@ const Add = () => {
             window.location.replace(window.location.href);
             setFormData({
                 userId: 'secret', 
-                category: '',
+                category: '', 
                 amount: '',
                 description: '',
                 date: Date.now()
@@ -35,18 +35,28 @@ const Add = () => {
     };
 
     return (
-        <Box>
+        <Box sx={{ width: 500 }}>
             <Typography variant='h4'>Add Transaction</Typography>
             <form onSubmit={handleSubmit}>
-                <TextField
-                    name="category"
-                    label='Category'
-                    variant='outlined'
-                    margin='normal'
-                    fullWidth
-                    value={formData.category}
-                    onChange={handleInputChange}
-                />
+                <FormControl fullWidth margin="normal">
+                    <InputLabel id="category-label">Category</InputLabel>
+                    <Select
+                        labelId="category-label"
+                        id="category"
+                        name="category"
+                        label="Category"
+                        value={formData.category}
+                        onChange={handleInputChange}
+                        sx={{ textAlign: 'left' }}
+                    >
+                        <MenuItem value="Food">Food</MenuItem>
+                        <MenuItem value="Transport">Transport</MenuItem>
+                        <MenuItem value="Entertainment">Entertainment</MenuItem>
+                        <MenuItem value="Utilities">Utilities</MenuItem>
+                        <MenuItem value="Healthcare">Healthcare</MenuItem>
+                        <MenuItem value="Other">Other</MenuItem>
+                    </Select>
+                </FormControl>
                 <TextField
                     name="amount"
                     label='Amount'
@@ -69,6 +79,8 @@ const Add = () => {
                     type='submit'
                     variant='contained'
                     color='primary'
+                    fullWidth
+                    sx={{ mt: 2 }}
                 >
                     Add
                 </Button>
