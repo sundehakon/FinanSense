@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
-import { Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -11,6 +11,7 @@ const ChartComponent = () => {
     const [amounts, setAmounts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [total, setTotal] = useState([]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,7 +46,7 @@ const ChartComponent = () => {
             labels: categories,
             datasets: [{
                 data: amounts, 
-                backgroundColor: categories.map(category => categoryColors[category])
+                backgroundColor: categories.map(category => categoryColors[category] || '#cccccc')  
             }],
         };
     }, [categories, amounts]);
@@ -58,6 +59,15 @@ const ChartComponent = () => {
             maintainAspectRatio: false,
         },
     }), [chartData]);
+
+    useEffect(() => {
+        const calcTotal = () => {
+            const total = amounts.reduce((acc, curr) => acc + curr, 0);
+            setTotal(total);
+        };
+
+        calcTotal();
+    }, [amounts]);
 
     useEffect(() => {
         if (categories.length > 0 && chartRef.current) {
@@ -79,6 +89,7 @@ const ChartComponent = () => {
                     <canvas ref={chartRef}></canvas>
                 </Box>
             )}
+            <Typography variant='h4'>Total: {total}$</Typography>
         </>
     );
 };
