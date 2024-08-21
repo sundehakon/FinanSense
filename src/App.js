@@ -5,6 +5,7 @@ import Add from './Components/Add';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import LanguageIcon from '@mui/icons-material/Language';
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
           </IconButton>
           <IconButton href='https://github.com/sundehakon' target='_blank' disableRipple sx={{ backgroundColor: 'transparent' }}>
             <GitHubIcon />
+          </IconButton>
+          <IconButton href='https://sundehakon.tech/' target='_blank' disableRipple sx={{ backgroundColor: 'transparent' }}>
+            <LanguageIcon />
           </IconButton>
         </Box>
         <Add />
