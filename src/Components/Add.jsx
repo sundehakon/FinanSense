@@ -5,7 +5,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import axios from "axios";
 
 const Add = () => {
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(true);
     const [formData, setFormData] = useState({
         userId: 'secret',
         category: '',
