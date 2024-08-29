@@ -4,7 +4,7 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useState } from "react";
 
 const View = () => {
-    const [showForm, setShowForm] = useState(false);
+    const [showForm, setShowForm] = useState(true);
     return (
         <Box sx={{ width: 500 }}>   
             {!showForm &&

@@ -31,13 +31,15 @@ function App() {
           </IconButton>
         </Box>
         <ButtonGroup variant='contained'>
-          <Button>Add Expenses</Button>
-          <Button>View Expenses</Button>
+          <Button onClick={() => setShowComponent('add')}>Add Expenses</Button>
+          <Button onClick={() => setShowComponent('view')}>View Expenses</Button>
         </ButtonGroup>
-        {showComponent == 'add' &&
+        {showComponent === 'add' &&
           <Add />
         }
-        <View />
+        {showComponent === 'view' &&
+          <View />
+        }
         <ChartComponent />
       </Box>
     </div>
