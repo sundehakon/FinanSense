@@ -39,7 +39,6 @@ const Add = () => {
 
     return (
         <Box sx={{ width: 500 }}>
-            <Typography variant='h4'>Add Expense</Typography>
             {!showForm &&
                 <IconButton
                     onClick={() => setShowForm(true)}   

@@ -1,4 +1,4 @@
-import { Box, Typography, IconButton } from '@mui/material';
+import { Box, Typography, IconButton, ButtonGroup, Button } from '@mui/material';
 import './App.css';
 import ChartComponent from './Components/Chart';
 import Add from './Components/Add';
@@ -6,8 +6,10 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import LanguageIcon from '@mui/icons-material/Language';
+import View from './Components/View';
 
 function App() {
+  const [showComponent, setShowComponent] = useState('add');
   return (
     <div className="App">
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', marginTop: 5 }}>
@@ -27,7 +29,14 @@ function App() {
             <LanguageIcon />
           </IconButton>
         </Box>
-        <Add />
+        <ButtonGroup variant='contained'>
+          <Button>Add Expenses</Button>
+          <Button>View Expenses</Button>
+        </ButtonGroup>
+        {showComponent
+          <Add />
+        }
+        <View />
         <ChartComponent />
       </Box>
     </div>
