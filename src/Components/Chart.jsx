@@ -7,20 +7,23 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 const ChartComponent = () => {
     const chartRef = useRef(null);
-    const [categories, setCategories] = useState([]);
-    const [amounts, setAmounts] = useState([]);
+    const [categoryTotals, setCategoryTotals] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [total, setTotal] = useState([]);
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/Expenses');
-                const categoryData = response.data.map(expense => expense.category);
-                const amountData = response.data.map(expense => expense.amount);
-                setCategories(categoryData);
-                setAmounts(amountData);
+                const expenses = response.data;
+
+                const totals = expenses.reduce((acc, expense) => {
+                    acc[expense.category] = (acc[expense.category] || 0) + expense.amount;
+                    return acc;
+                }, {});
+
+                setCategoryTotals(totals);
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data', error);
@@ -43,13 +46,13 @@ const ChartComponent = () => {
         };
 
         return {
-            labels: categories,
+            labels: Object.keys(categoryTotals),
             datasets: [{
-                data: amounts, 
-                backgroundColor: categories.map(category => categoryColors[category] || '#cccccc')  
+                data: Object.values(categoryTotals), 
+                backgroundColor: Object.keys(categoryTotals).map(category => categoryColors[category] || '#cccccc')  
             }],
         };
-    }, [categories, amounts]);
+    }, [categoryTotals]);
 
     const chartConfig = useMemo(() => ({
         type: 'doughnut',
@@ -62,15 +65,15 @@ const ChartComponent = () => {
 
     useEffect(() => {
         const calcTotal = () => {
-            const total = amounts.reduce((acc, curr) => acc + curr, 0);
+            const total = Object.values(categoryTotals).reduce((acc, curr) => acc + curr, 0);
             setTotal(total);
         };
 
         calcTotal();
-    }, [amounts]);
+    }, [categoryTotals]);
 
     useEffect(() => {
-        if (categories.length > 0 && chartRef.current) {
+        if (Object.keys(categoryTotals).length > 0 && chartRef.current) {
             const ctx = chartRef.current.getContext('2d');
             const myChart = new Chart(ctx, chartConfig);
 
@@ -78,16 +81,16 @@ const ChartComponent = () => {
                 myChart.destroy();
             };
         }
-    }, [categories, chartConfig]);
+    }, [categoryTotals, chartConfig]);
 
     return (
         <>
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
-            {!loading && !error && categories.length > 0 && (
+            {!loading && !error && Object.keys(categoryTotals).length > 0 && (
                 <Typography variant='h4'>Total: {total}$</Typography>
             )}
-            {!loading && !error && categories.length > 0 && (
+            {!loading && !error && Object.keys(categoryTotals).length > 0 && (
                 <Box>
                     <canvas ref={chartRef}></canvas>
                 </Box>
