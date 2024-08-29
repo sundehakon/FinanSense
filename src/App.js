@@ -1,4 +1,5 @@
 import { Box, Typography, IconButton, ButtonGroup, Button } from '@mui/material';
+import React, { useState } from "react";
 import './App.css';
 import ChartComponent from './Components/Chart';
 import Add from './Components/Add';
@@ -33,7 +34,7 @@ function App() {
           <Button>Add Expenses</Button>
           <Button>View Expenses</Button>
         </ButtonGroup>
-        {showComponent
+        {showComponent == 'add' &&
           <Add />
         }
         <View />
