@@ -12,14 +12,14 @@ const View = () => {
         const fetchExpenses = async () => {
             try {
                 const response = await axios.get('http://localhost:8080/api/Expenses');
-                setExpenses(response);
+                setExpenses(response.data); 
             } catch (error) {
                 console.error('Error fetching expenses', error);
             }
         };
 
         fetchExpenses();
-    });
+    }, []); 
 
     return (
         <Box sx={{ width: 500 }}>   
