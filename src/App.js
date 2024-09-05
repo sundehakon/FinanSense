@@ -30,7 +30,8 @@ function App() {
             <LanguageIcon />
           </IconButton>
         </Box>
-        <ButtonGroup variant='contained'>
+        <ChartComponent />
+        <ButtonGroup variant='contained' sx={{ marginTop: 4 }}>
           <Button onClick={() => setShowComponent('add')}>Add Expenses</Button>
           <Button onClick={() => setShowComponent('view')}>View Expenses</Button>
         </ButtonGroup>
@@ -40,7 +41,6 @@ function App() {
         {showComponent === 'view' &&
           <View />
         }
-        <ChartComponent />
       </Box>
     </div>
   );
