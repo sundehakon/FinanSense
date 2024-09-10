@@ -1,4 +1,5 @@
 import { Box, Typography, IconButton, ButtonGroup, Button } from '@mui/material';
+import React, { useState } from "react";
 import './App.css';
 import ChartComponent from './Components/Chart';
 import Add from './Components/Add';
@@ -29,15 +30,21 @@ function App() {
             <LanguageIcon />
           </IconButton>
         </Box>
-        <ButtonGroup variant='contained'>
-          <Button>Add Expenses</Button>
-          <Button>View Expenses</Button>
+        <ChartComponent />
+        <ButtonGroup variant='contained' sx={{ marginTop: 4 }}>
+          <Button onClick={() => setShowComponent('add')}>Add Expenses</Button>
+          <Button onClick={() => setShowComponent('view')}>View Expenses</Button>
         </ButtonGroup>
+<<<<<<< HEAD
         {showComponent == 'add' &&
+=======
+        {showComponent === 'add' &&
+>>>>>>> edd5a329fa528324fe5c337c94de470564ad2761
           <Add />
         }
-        <View />
-        <ChartComponent />
+        {showComponent === 'view' &&
+          <View />
+        }
       </Box>
     </div>
   );
