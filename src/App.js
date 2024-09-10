@@ -33,7 +33,7 @@ function App() {
           <Button>Add Expenses</Button>
           <Button>View Expenses</Button>
         </ButtonGroup>
-        {showComponent
+        {showComponent == 'add' &&
           <Add />
         }
         <View />
