@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useMemo } from 'react';
 import { Chart, DoughnutController, ArcElement, Tooltip, Legend } from 'chart.js';
 import axios from 'axios';
 import { Box, Typography } from '@mui/material';
+import { useAuth0 } from '@auth0/auth0-react';
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
@@ -12,10 +13,12 @@ const ChartComponent = () => {
     const [error, setError] = useState(null);
     const [total, setTotal] = useState(0);
 
+    const { user } = useAuth0();
+
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/Expenses');
+                const response = await axios.get(`http://localhost:8080/api/Expenses?userId=${user?.sub}`);
                 const expenses = response.data;
 
                 const totals = expenses.reduce((acc, expense) => {
@@ -27,7 +30,7 @@ const ChartComponent = () => {
                 setLoading(false);
             } catch (error) {
                 console.error('Error fetching data', error);
-                setError('Failed to fetch data');
+                setError('No data to show');
                 setLoading(false);
             }
         };
@@ -88,7 +91,7 @@ const ChartComponent = () => {
             {loading && <p>Loading...</p>}
             {error && <p>{error}</p>}
             {!loading && !error && Object.keys(categoryTotals).length > 0 && (
-                <Typography variant='h4'>Total: {total}$</Typography>
+                <Typography variant='h4'>{total}$</Typography>
             )}
             {!loading && !error && Object.keys(categoryTotals).length > 0 && (
                 <Box>

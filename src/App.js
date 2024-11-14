@@ -41,22 +41,24 @@ function App() {
           </Box>
         }
         {isAuthenticated &&
-          <Box sx={{ marginBottom: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 1 }}>
-            <LogoutButton />
-            <Avatar alt='User picture' src={user.picture} />
-            <Typography>{user.nickname}</Typography>
-          </Box>
-        } 
-        <ChartComponent />
-        <ButtonGroup variant='contained' color='secondary' sx={{ marginTop: 4 }}>
-          <Button onClick={() => setShowComponent('add')}>Add Expenses</Button>
-          <Button onClick={() => setShowComponent('view')}>View Expenses</Button>
-        </ButtonGroup>
-        {showComponent === 'add' &&
-          <Add />
-        }
-        {showComponent === 'view' &&
-          <View />
+          <div>
+            <Box sx={{ marginBottom: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 1 }}>
+              <LogoutButton />
+              <Avatar alt='User picture' src={user.picture} />
+              <Typography>{user.nickname}</Typography>
+            </Box>
+            <ChartComponent />
+            <ButtonGroup variant='contained' color='secondary' sx={{ marginTop: 4 }}>
+              <Button onClick={() => setShowComponent('add')}>Add Expenses</Button>
+              <Button onClick={() => setShowComponent('view')}>View Expenses</Button>
+            </ButtonGroup>
+            {showComponent === 'add' &&
+              <Add />
+            }
+            {showComponent === 'view' &&
+              <View />
+            }
+          </div>
         }
       </Box>
     </div>
