@@ -35,7 +35,11 @@ function App() {
           <Button onClick={() => setShowComponent('add')}>Add Expenses</Button>
           <Button onClick={() => setShowComponent('view')}>View Expenses</Button>
         </ButtonGroup>
+<<<<<<< HEAD
+        {showComponent == 'add' &&
+=======
         {showComponent === 'add' &&
+>>>>>>> edd5a329fa528324fe5c337c94de470564ad2761
           <Add />
         }
         {showComponent === 'view' &&
