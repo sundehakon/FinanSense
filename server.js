@@ -66,6 +66,23 @@ app.get('/api/Expenses', async (req, res) => {
     }
 });
 
+app.delete('/api/Expenses/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deletedExpenses = await Expenses.findByIdAndDelete(id);
+
+        if (!deletedExpenses) {
+            return res.status(404).send('Expense not found');
+        }
+
+        res.status(200).send('Expense deleted');
+    } catch (error) {
+        console.error('Error deleting expense:', error);
+        res.status(500).send(error);
+    }
+});
+
 db.on('error', (error) => {
     console.error('MongoDB connection error: ' + error);
 });
