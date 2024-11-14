@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Box, TextField, Button, FormControl, Select, MenuItem, InputLabel, IconButton } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import axios from "axios";
+import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Add = () => {
     const [showForm, setShowForm] = useState(true);
+    const { user } = useAuth0();
     const [formData, setFormData] = useState({
-        userId: 'secret',
+        userId: '',
         category: '',
         amount: '',
         description: '',
@@ -22,12 +24,12 @@ const Add = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const dataToSend = { ...formData };
+            const dataToSend = { ...formData, userId: user.sub };
             await axios.post('http://localhost:8080/api/Expenses', dataToSend);
             window.location.replace(window.location.href);
             setFormData({
-                userId: 'secret', 
-                category: '', 
+                userId: user.sub, 
+                category: '',   
                 amount: '',
                 description: '',
                 date: Date.now()
