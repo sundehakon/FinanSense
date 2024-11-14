@@ -49,13 +49,14 @@ const Add = () => {
             }
             {showForm &&
             <form onSubmit={handleSubmit}>
-                <FormControl fullWidth margin="normal">
-                    <InputLabel id="category-label">Category</InputLabel>
+                <FormControl fullWidth margin='normal'>
+                    <InputLabel id='category-label' color='secondary'>Category</InputLabel>
                     <Select
-                        labelId="category-label"
-                        id="category"
-                        name="category"
-                        label="Category"
+                        labelId='category-label'
+                        id='category'
+                        name='category'
+                        label='Category'
+                        color='secondary'
                         value={formData.category}
                         onChange={handleInputChange}
                         sx={{ textAlign: 'left' }}
@@ -69,19 +70,21 @@ const Add = () => {
                     </Select>
                 </FormControl>
                 <TextField
-                    name="amount"
+                    name='amount'
                     label='Amount'
                     variant='outlined'
                     margin='normal'
+                    color='secondary'
                     fullWidth
                     value={formData.amount}
                     onChange={handleInputChange}
                 />
                 <TextField
-                    name="description"
+                    name='description'
                     label='Description'
                     variant='outlined'
                     margin='normal'
+                    color='secondary'
                     fullWidth
                     value={formData.description}
                     onChange={handleInputChange}
@@ -89,7 +92,7 @@ const Add = () => {
                 <Button
                     type='submit'
                     variant='contained'
-                    color='primary'
+                    color='secondary'
                     fullWidth
                     sx={{ mt: 2 }}
                 >
