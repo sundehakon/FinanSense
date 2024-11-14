@@ -1,4 +1,4 @@
-import { Box, Typography, IconButton, ButtonGroup, Button } from '@mui/material';
+import { Box, Typography, IconButton, ButtonGroup, Button, Avatar } from '@mui/material';
 import React, { useState } from 'react';
 import './App.css';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -41,9 +41,10 @@ function App() {
           </Box>
         }
         {isAuthenticated &&
-          <Box sx={{ marginBottom: 3 }}>
+          <Box sx={{ marginBottom: 3, display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 1 }}>
             <LogoutButton />
-            <Typography>{`Welcome, ${user.name}!`}</Typography>
+            <Avatar alt='User picture' src={user.picture} />
+            <Typography>{user.nickname}</Typography>
           </Box>
         } 
         <ChartComponent />
