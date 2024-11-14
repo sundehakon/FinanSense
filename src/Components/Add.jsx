@@ -24,11 +24,10 @@ const Add = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const dataToSend = { ...formData, userId: user.sub };
-            await axios.post('http://localhost:8080/api/Expenses', dataToSend);
+            const dataToSend = { ...formData };
+            await axios.post(`http://localhost:8080/api/Expenses?userId=${user?.sub}`, dataToSend);
             window.location.replace(window.location.href);
             setFormData({
-                userId: user.sub, 
                 category: '',   
                 amount: '',
                 description: '',

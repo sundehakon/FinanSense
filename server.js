@@ -38,7 +38,12 @@ const expenseSchema = new mongoose.Schema({
 const Expenses = mongoose.model('Expenses', expenseSchema);
 
 app.post('/api/Expenses', async (req, res) => {
-    const { userId, category, amount, description, date } = req.body;
+    const { category, amount, description, date } = req.body;
+    const { userId } = req.query; 
+
+    if (!userId) {
+        return res.status(400).send('userId is required');
+    }
 
     const expenses = new Expenses({
         userId,
@@ -56,9 +61,16 @@ app.post('/api/Expenses', async (req, res) => {
     }
 });
 
+
 app.get('/api/Expenses', async (req, res) => {
+    const { userId } = req.query;  
+
+    if (!userId) {
+        return res.status(400).send('userId is required');
+    }
+
     try {
-        const expenses = await Expenses.find();
+        const expenses = await Expenses.find({ userId });
         res.status(200).json(expenses);
     } catch (err) {
         console.error('Error fetching expenses:', err); 
@@ -66,14 +78,20 @@ app.get('/api/Expenses', async (req, res) => {
     }
 });
 
+
 app.delete('/api/Expenses/:id', async (req, res) => {
     const { id } = req.params;
+    const { userId } = req.query; 
+
+    if (!userId) {
+        return res.status(400).send('userId is required');
+    }
 
     try {
-        const deletedExpenses = await Expenses.findByIdAndDelete(id);
+        const deletedExpenses = await Expenses.findOneAndDelete({ _id: id, userId });
 
         if (!deletedExpenses) {
-            return res.status(404).send('Expense not found');
+            return res.status(404).send('Expense not found or unauthorized');
         }
 
         res.status(200).send('Expense deleted');
@@ -82,6 +100,7 @@ app.delete('/api/Expenses/:id', async (req, res) => {
         res.status(500).send(error);
     }
 });
+
 
 db.on('error', (error) => {
     console.error('MongoDB connection error: ' + error);
